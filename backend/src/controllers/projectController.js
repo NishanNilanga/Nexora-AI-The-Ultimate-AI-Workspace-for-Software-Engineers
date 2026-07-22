@@ -1,4 +1,5 @@
 const Project = require("../models/Project");
+const Notification = require("../models/Notification");
 
 // Create Project
 exports.createProject = async (req, res) => {
@@ -7,6 +8,15 @@ exports.createProject = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       owner: req.user.id,
+    });
+
+    // Create Notification
+    await Notification.create({
+      title: "Project Created",
+      message: `"${project.title}" project has been created successfully.`,
+      type: "project",
+      user: req.user._id,
+      link: `/projects/${project._id}`,
     });
 
     res.status(201).json({
@@ -41,8 +51,7 @@ exports.getProjects = async (req, res) => {
   }
 };
 
-
-// Put My Projects
+// Update Project
 exports.updateProject = async (req, res) => {
   try {
     const { title, description, status } = req.body;
@@ -56,7 +65,6 @@ exports.updateProject = async (req, res) => {
       });
     }
 
-    // Check owner
     if (project.owner.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
@@ -84,8 +92,6 @@ exports.updateProject = async (req, res) => {
   }
 };
 
-
-
 // Delete Project
 exports.deleteProject = async (req, res) => {
   try {
@@ -98,7 +104,6 @@ exports.deleteProject = async (req, res) => {
       });
     }
 
-    // Check owner
     if (project.owner.toString() !== req.user._id.toString()) {
       return res.status(403).json({
         success: false,
@@ -120,6 +125,3 @@ exports.deleteProject = async (req, res) => {
     });
   }
 };
-
-
-

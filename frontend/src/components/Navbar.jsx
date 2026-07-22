@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from "react";
 import {
-  Bell,
   Search,
   Settings,
   BrainCircuit,
 } from "lucide-react";
+
+import NotificationBell from "@/components/notifications/NotificationBell";
 
 export default function Navbar() {
   const [user, setUser] =useState(null);
@@ -77,18 +78,12 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
 
-          {/* Notifications */}
 
-          <button className="group relative flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-700 bg-slate-800 transition-all duration-300 hover:border-blue-500 hover:bg-slate-700">
 
-            <Bell
-              size={20}
-              className="text-slate-300 group-hover:text-white"
-            />
+          <NotificationBell />
 
-            <span className="absolute right-3 top-3 h-2 w-2 rounded-full bg-red-500"></span>
 
-          </button>
+        
 
           {/* Settings */}
 
